@@ -23,24 +23,15 @@
       perSystem =
         { system, ... }:
         let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
           nixvimLib = nixvim.lib.${system};
           nixvim' = nixvim.legacyPackages.${system};
           nixvimModule = {
             inherit system; # or alternatively, set `pkgs`
             module = import ./config/main; # import the module directly
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
-            extraSpecialArgs = {
-              propagateBuildInputs = [pkgs.gcc pkgs.tree-sitter];
-            };
           };
           minimalNixvimModule = {
             inherit system; # or alternatively, set `pkgs`
             module = import ./config/minimal; # import the module directly
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
-            extraSpecialArgs = {
-              propagateBuildInputs = [pkgs.gcc pkgs.tree-sitter];
-            };
           };
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
           minimal-nvim = nixvim'.makeNixvimWithModule minimalNixvimModule;

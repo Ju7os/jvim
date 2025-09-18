@@ -1,3 +1,4 @@
+{pkgs, ...}:
 {
   globals = {
     mapleader = " ";
@@ -32,4 +33,33 @@
     signcolumn = "yes";
     swapfile = false;
   };
+  diagnostic.settings = {
+    underline = true;
+    float.border = [ "╭" "┈" "╮" "│" "╯" "┈" "╰" "│" ];
+    signs = {
+      text = {
+        "__rawKey__vim.diagnostic.severity.ERROR" = "󰅚 ";
+        "__rawKey__vim.diagnostic.severity.WARN"  = "󰀪 ";
+        "__rawKey__vim.diagnostic.severity.HINT"  = "󰌶 ";
+        "__rawKey__vim.diagnostic.severity.INFO"  = " ";
+      };
+      texthl = {
+        "__rawKey__vim.diagnostic.severity.ERROR" = "DiagnosticSignError"; 
+        "__rawKey__vim.diagnostic.severity.WARN"  = "DiagnosticSignWarn";
+        "__rawKey__vim.diagnostic.severity.HINT"  = "DiagnosticSignHint";
+        "__rawKey__vim.diagnostic.severity.INFO"  = "DiagnosticSignInfo";
+      };
+      numhl = {
+        "__rawKey__vim.diagnostic.severity.ERROR" = "DiagnosticSignError";
+        "__rawKey__vim.diagnostic.severity.WARN"  = "DiagnosticSignWarn";
+        "__rawKey__vim.diagnostic.severity.HINT"  = "DiagnosticSignHint";
+        "__rawKey__vim.diagnostic.severity.INFO"  = "DiagnosticSignInfo";
+      };
+    };
+  };
+  extraPackages = [
+    pkgs.gcc
+    pkgs.tree-sitter
+  ];
+  plugins.nvim-autopairs.enable = true;
 }
