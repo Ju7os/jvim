@@ -23,6 +23,7 @@
       perSystem =
         { system, ... }:
         let
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
           nixvimLib = nixvim.lib.${system};
           nixvim' = nixvim.legacyPackages.${system};
           nixvimModule = {
@@ -30,7 +31,7 @@
             module = import ./config/main; # import the module directly
             # You can use `extraSpecialArgs` to pass additional arguments to your module files
             extraSpecialArgs = {
-              # inherit (inputs) foo;
+              propagateBuildInputs = [pkgs.gcc pkgs.tree-sitter];
             };
           };
           minimalNixvimModule = {
@@ -38,7 +39,7 @@
             module = import ./config/minimal; # import the module directly
             # You can use `extraSpecialArgs` to pass additional arguments to your module files
             extraSpecialArgs = {
-              # inherit (inputs) foo;
+              propagateBuildInputs = [pkgs.gcc pkgs.tree-sitter];
             };
           };
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
@@ -48,6 +49,7 @@
           checks = {
             # Run `nix flake check .` to verify that your config is not broken
             default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
+            minimal-nvim = nixvimLib.check.mkTestDerivationFromNixvimModule minimalNixvimModule;
           };
 
           packages = {
