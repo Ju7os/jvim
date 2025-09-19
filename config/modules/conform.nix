@@ -1,9 +1,10 @@
+{ pkgs, ... }:
 {
   plugins.conform-nvim = {
     enable = true;
     settings = {
       formatters_by_ft = {
-        nix = [ "nixfmt" ]; 
+        nix = [ "alejandra" ]; 
         glsl = [ "clang-format" ]; c = [ "clang-format" ]; cpp = [ "clang-format" ]; rust = [ "rustfmt" ]; python = [ "isort" "black" ]; lua = [ "stylua" ];
         "_" = [ "trim_whitespace" "trim_newlines" ];
       };
@@ -22,4 +23,12 @@
       notify_no_formatters = true;
     };
   };
+
+  extraPackages = with pkgs; [
+    clang
+    alejandra
+    stylua
+    isort
+    black
+  ];
 }
