@@ -60,6 +60,7 @@
   extraPackages = [
     pkgs.gcc
     pkgs.tree-sitter
+    pkgs.nodejs-slim
   ];
   plugins.nvim-autopairs.enable = true;
 }
