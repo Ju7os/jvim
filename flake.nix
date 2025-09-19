@@ -54,9 +54,9 @@
 
           packages = {
             # Lets you run `nix run .` to start nixvim
-            full = full-nvim;
-            mid = mid-nvim;
-            min = minimal-nvim;
+            jvim-full = full-nvim;
+            jvim-mid = mid-nvim;
+            jvim-min = minimal-nvim;
           };
         };
     };
