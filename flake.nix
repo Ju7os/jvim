@@ -1,63 +1,40 @@
 {
-  description = "A nixvim configuration";
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    nixpkgs.url = "github:NixOS/nixpkgs/25.05";
+    nvf.url = "github:notashelf/nvf/";
   };
 
-  outputs =
-    { nixvim, flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
+  outputs = {nixpkgs, ...} @ inputs: let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
 
-      perSystem =
-        { system, ... }:
-        let
-          nixvimLib = nixvim.lib.${system};
-          nixvim' = nixvim.legacyPackages.${system};
-
-          fullNixvimModule = {
-            inherit system; # or alternatively, set `pkgs`
-            module = import ./config/full; # import the module directly
-          };
-
-          midNixvimModule = {
-            inherit system; # or alternatively, set `pkgs`
-            module = import ./config/mid; # import the module directly
-          };
-
-          minimalNixvimModule = {
-            inherit system; # or alternatively, set `pkgs`
-            module = import ./config/minimal; # import the module directly
-          };
-          full-nvim = nixvim'.makeNixvimWithModule fullNixvimModule;
-          mid-nvim = nixvim'.makeNixvimWithModule midNixvimModule;
-          minimal-nvim = nixvim'.makeNixvimWithModule minimalNixvimModule;
-        in
-        {
-          checks = {
-            # Run `nix flake check .` to verify that your config is not broken
-            full = nixvimLib.check.mkTestDerivationFromNixvimModule fullNixvimModule;
-            mid =  nixvimLib.check.mkTestDerivationFromNixvimModule midNixvimModule;
-            min = nixvimLib.check.mkTestDerivationFromNixvimModule minimalNixvimModule;
-          };
-
-          packages = {
-            # Lets you run `nix run .` to start nixvim
-            jvim-full = full-nvim;
-            jvim-mid = mid-nvim;
-            jvim-min = minimal-nvim;
-          };
-        };
+    jvimFullModule = {
+      inherit pkgs;
+      extraSpecialArgs = {
+        lspEnable = true;
+        treesitterEnable = true;
+        dapEnable = true;
+        formatEnable = true;
+      };
+      modules = [./config/full];
     };
+
+    jvimMinModule = {
+      inherit pkgs;
+      extraSpecialArgs = {
+        lspEnable = false;
+        treesitterEnable = true;
+        dapEnable = false;
+        formatEnable = false;
+      };
+      modules = [./config/minimal];
+    };
+
+    full = (inputs.nvf.lib.neovimConfiguration jvimFullModule).neovim;
+    min = (inputs.nvf.lib.neovimConfiguration jvimMinModule).neovim;
+  in {
+    packages.${system} = {
+      inherit full min;
+    };
+  };
 }

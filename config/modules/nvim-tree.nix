@@ -1,26 +1,29 @@
 {
-  plugins.nvim-tree = {
-    enable = true;
-    settings = {
-      actions = {
-        open_file.quit_on_open = true;
+  config.vim = {
+    visuals.nvim-web-devicons.enable = true;
+    filetree.nvimTree = {
+      enable = true; 
+      openOnSetup = false;
+      setupOpts = {
+        actions = {
+          open_file.quit_on_open = true;
+        };
+        view = {
+          width = 50;
+        };
+        renderer = {
+          group_empty = true;
+        };
+        sort.sorter = "extension";
+        git = {
+          enable = true;
+          show_on_dirs = false;
+        };
+        hijack_directories.enable = false;
       };
-      view = {
-        width = 50;
-      };
-      renderer = {
-        group_empty = true;
-      };
-      sort.sorter = "extension";
-      git = {
-        enable = true;
-        show_on_dirs = false;
-      };
-    };
-  };
-  plugins.web-devicons.enable = true;
-
+    }; 
   keymaps = [
-        { mode = "n"; key = "<leader>e"; action = "<cmd>NvimTreeToggle<CR>"; options.desc = "Toggle NvimTree";}
+        { mode = "n"; key = "<leader>e"; action = "<cmd>NvimTreeToggle<CR>"; desc = "Toggle NvimTree";}
   ];
+  };
 }

@@ -1,3 +1,8 @@
+{ ... }:
 {
-  colorschemes.rose-pine.enable = true;
+  config.vim.theme = {
+    enable = true;
+    name = "rose-pine";
+    style = "moon";
+  };
 }
