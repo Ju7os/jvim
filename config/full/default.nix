@@ -1,11 +1,11 @@
 { ... }:
 {
-  imports = [ 
+  imports = [
     ../modules/mappings.nix
     ../modules/colorscheme.nix
     ../modules/user-commands.nix
     ../modules/options.nix
-    ../modules/languages.nix 
+    ../modules/languages.nix
     ../modules/toggleterm.nix
     ../modules/nvim-tree.nix
     ../modules/binds.nix

@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, lib, ...}:
 {
   config.vim = {
 
@@ -36,27 +36,26 @@
     };
     diagnostics.config = {
       underline = true;
-      float.border = [ "╭" "┈" "╮" "│" "╯" "┈" "╰" "│" ];
-      signs = {
+      signs = lib.generators.mkLuaInline /*Lua*/ ''{
         text = {
-          "__rawKey__vim.diagnostic.severity.ERROR" = "󰅚 ";
-          "__rawKey__vim.diagnostic.severity.WARN"  = "󰀪 ";
-          "__rawKey__vim.diagnostic.severity.HINT"  = "󰌶 ";
-          "__rawKey__vim.diagnostic.severity.INFO"  = " ";
-        };
-        texthl = {
-          "__rawKey__vim.diagnostic.severity.ERROR" = "DiagnosticSignError"; 
-          "__rawKey__vim.diagnostic.severity.WARN"  = "DiagnosticSignWarn";
-          "__rawKey__vim.diagnostic.severity.HINT"  = "DiagnosticSignHint";
-          "__rawKey__vim.diagnostic.severity.INFO"  = "DiagnosticSignInfo";
-        };
+            [vim.diagnostic.severity.ERROR] = '󰅚 ',
+            [vim.diagnostic.severity.WARN] = '󰀪 ',
+            [vim.diagnostic.severity.HINT] = '󰌶 ',
+            [vim.diagnostic.severity.INFO] = ' '
+        },
+        linehl = {
+            [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+            [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+            [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+            [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo'
+        },
         numhl = {
-          "__rawKey__vim.diagnostic.severity.ERROR" = "DiagnosticSignError";
-          "__rawKey__vim.diagnostic.severity.WARN"  = "DiagnosticSignWarn";
-          "__rawKey__vim.diagnostic.severity.HINT"  = "DiagnosticSignHint";
-          "__rawKey__vim.diagnostic.severity.INFO"  = "DiagnosticSignInfo";
-        };
-      };
+            [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+            [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+            [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+            [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo'
+        }
+      }'';
     };
     extraPackages = [
       pkgs.gcc
