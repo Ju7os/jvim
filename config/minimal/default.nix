@@ -1,6 +1,6 @@
 { ... }:
 {
-  imports = [ 
+  imports = [
     ../modules/mappings.nix
     ../modules/colorscheme.nix
     ../modules/user-commands.nix
@@ -10,6 +10,6 @@
     ../modules/binds.nix
     ../modules/lualine.nix
     ../modules/misc.nix
-    ../modules/languages.nix 
+    ../modules/languages.nix
   ];
 }

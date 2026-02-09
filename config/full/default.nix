@@ -10,7 +10,7 @@
     ../modules/nvim-tree.nix
     ../modules/binds.nix
     ../modules/lualine.nix
-    # ../modules/orgmode.nix
+    ../modules/notes.nix
     ../modules/misc.nix
     ../modules/cmp.nix
     ../modules/harpoon.nix
