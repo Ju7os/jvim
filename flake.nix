@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/25.11";
-    nvf.url = "github:notashelf/nvf/";
+    nixpkgs.url = "github:NixOS/nixpkgs/26.05";
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let

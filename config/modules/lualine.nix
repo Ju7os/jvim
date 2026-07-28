@@ -2,45 +2,56 @@
   config.vim.statusline.lualine = {
     enable = true;
     theme = "auto";
-    disabledFiletypes = ["NvimTree"];
+    disabledFiletypes.statusline = ["NvimTree"];
     activeSection = {
       a = [
-      ''
-        {
-        "mode",
-        separator = {right = ''};
-        }
-      ''
+        ''
+          {
+          "mode",
+          separator = {right = ''};
+          }
+        ''
       ];
-      c = [ ''{ "filename";
-          path = 3; 
-          symbols = {
-            modified = " ";
-            readonly = "󰌾 ";
-            unnamed = ""; 
-            newfile = " ";
-          };
-        }''
+      b = [
+        ''
+          {
+          "branch",
+          "diff",
+           separator = {right = '', left = ''}
+          }
+        ''
       ];
-      y = [ 
-      ''
-        {
-        "encoding",
-        separator = {left = ''}
-        }
-      ''
-      ''
-        {
-        "fileformat",
-        separator = {right = '', left = ''}
-        }
-      ''
-      ''
-        {
-        "filetype",
-        separator = {right = ''}
-        }
-      '' ];
+      c = [
+        ''          { "filename";
+                    path = 3; 
+                    symbols = {
+                      modified = " ";
+                      readonly = "󰌾 ";
+                      unnamed = ""; 
+                      newfile = " ";
+                    };
+                  }''
+      ];
+      y = [
+        ''
+          {
+          "encoding",
+          separator = {left = ''}
+          }
+        ''
+        ''
+          {
+          "fileformat",
+          separator = {right = '', left = ''}
+          }
+        ''
+        ''
+          {
+          "filetype",
+          separator = {right = ''}
+          }
+        ''
+      ];
       z = [''{"progress"}''];
     };
   };
